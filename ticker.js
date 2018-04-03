@@ -6,26 +6,26 @@ function checkTicker() {
 	if (ticker.readyState == 4 && ticker.status == 200) {
 		var jsonresponse=JSON.parse(ticker.responseText);
 		for (i=0;i<jsonresponse.length;i++) {
-			if (jsonresponse[i]['id']=='zcash') {
+			if (jsonresponse[i]['id']=='part') {
 				//chrome.extension.getBackgroundPage().console.log(window.navigator.language);
-				var zcash_btc=jsonresponse[i]['price_btc'];
-				var zcash_usd=jsonresponse[i]['price_usd'];
-				var zcash_percent1h=jsonresponse[i]['percent_change_1h'];
-				var zcash_percent24h=jsonresponse[i]['percent_change_24h'];
-				var zcash_percent7d=jsonresponse[i]['percent_change_7d'];
-				var zcash_marketcap=jsonresponse[i]['market_cap_usd'];
-				var zcash_volume=jsonresponse[i]['24h_volume_usd'];
+				var part_btc=jsonresponse[i]['price_btc'];
+				var part_usd=jsonresponse[i]['price_usd'];
+				var part_percent1h=jsonresponse[i]['percent_change_1h'];
+				var part_percent24h=jsonresponse[i]['percent_change_24h'];
+				var part_percent7d=jsonresponse[i]['percent_change_7d'];
+				var part_marketcap=jsonresponse[i]['market_cap_usd'];
+				var part_volume=jsonresponse[i]['24h_volume_usd'];
 			}
 		}
-		chrome.browserAction.setBadgeText({text: parseFloat(zcash_usd).toFixed(1)});
-		var lines=["ZCASH price ticker (price taken from 'www.coinmarketcap.com')\n"];
+		chrome.browserAction.setBadgeText({text: parseFloat(part_usd).toFixed(1)});
+		var lines=["PART price ticker (price taken from 'www.coinmarketcap.com')\n"];
     var options = { style: 'currency', currency: 'USD'};
 		lines.push("\n");
-		lines.push("ZCASH "+FixIfNotNull(zcash_btc,8)+"BTC\n");
-		lines.push("ZCASH "+FixIfNotNull(zcash_usd,4)+"$\n");
-		lines.push("ZCASH Marketcap "+Number(zcash_marketcap).toLocaleString(window.navigator.language,options)+"\n");
-		lines.push("ZCASH 24h change "+FixIfNotNull(zcash_percent24h,2)+"%\n");
-		lines.push("ZCASH 24h Volume "+Number(zcash_volume).toLocaleString(window.navigator.language,options)+"\n");
+		lines.push("PART "+FixIfNotNull(part_btc,8)+"BTC\n");
+		lines.push("PART "+FixIfNotNull(part_usd,4)+"$\n");
+		lines.push("PART Marketcap "+Number(part_marketcap).toLocaleString(window.navigator.language,options)+"\n");
+		lines.push("PART 24h change "+FixIfNotNull(part_percent24h,2)+"%\n");
+		lines.push("PART 24h Volume "+Number(part_volume).toLocaleString(window.navigator.language,options)+"\n");
 		lines.push("\n");
 		lines.push(Date());
 		var title_lines="";
@@ -48,7 +48,7 @@ function FixIfNotNull(variable,decimals) {
 }
 chrome.browserAction.onClicked.addListener(function(activeTab)
     {
-      var newURL = "http://coinmarketcap.com/currencies/zcash/";
+      var newURL = "http://coinmarketcap.com/currencies/part/";
       chrome.tabs.create({ url: newURL });
     });
 window.setInterval(checkTicker, 240000); //4 minutes
